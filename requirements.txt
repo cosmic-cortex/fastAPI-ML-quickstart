@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+sklearn
+pydantic
+numpy
+pandas
+python-multipart
+
+pytest
+requests
