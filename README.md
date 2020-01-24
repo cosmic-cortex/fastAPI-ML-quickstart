@@ -12,3 +12,14 @@ source /path/to/venv/bin/activate
 pip install -r requirements.txt
 ```
 
+## Deployment with Docker
+1. Build the Docker image
+```
+docker build --file Dockerfile --tag fastapi-ml-quickstart .
+```
+
+Entering into the Docker image
+```
+docker run -it --entrypoint /bin/bash fastapi-ml-quickstart
+```
+

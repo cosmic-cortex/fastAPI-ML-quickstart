@@ -2,9 +2,8 @@ fastapi
 uvicorn
 sklearn
 pydantic
-numpy
 pandas
-python-multipart
 
+python-multipart
 pytest
 requests
