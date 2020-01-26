@@ -1,0 +1,20 @@
+# This GitHub action describes the continuous integration workflow for pull requests to master.
+
+name: ci
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checking out the repository
+      uses: actions/checkout@v1
+    - name: Build the Docker image and run the tests
+      run: docker-compose -f docker-compose.test.yaml up --abort-on-container-exit --exit-code-from fastapi-ml-quickstart

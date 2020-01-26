@@ -47,7 +47,7 @@ def predict_csv(csv_file: UploadFile = File(...)):
     if df_n_features != n_features:
         raise HTTPException(
             status_code=HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="Each data point must contain {n_features} features",
+            detail=f"Each data point must contain {n_features} features",
         )
 
     y_pred = model.predict(df.to_numpy().reshape(-1, n_features))

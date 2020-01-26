@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  fastapi-ml-quickstart:
+    build: .
+    container_name: fastapi-ml-quickstart
+    ports:
+      - 8000:8000
+
+networks:
+    default:
+        driver: bridge
