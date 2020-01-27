@@ -3,11 +3,11 @@ import pandas as pd
 
 from typing import List
 
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException, Depends
 from pydantic import BaseModel, ValidationError, validator
 from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 
-from .ml.model import model, n_features
+from .ml.model import Model, get_model, n_features
 
 
 class PredictRequest(BaseModel):
@@ -27,11 +27,10 @@ class PredictResponse(BaseModel):
 
 
 app = FastAPI()
-model.load()
 
 
 @app.post("/predict", response_model=PredictResponse)
-def predict(input: PredictRequest):
+def predict(input: PredictRequest, model: Model = Depends(get_model)):
     X = np.array(input.data)
     y_pred = model.predict(X)
     result = PredictResponse(data=y_pred.tolist())
@@ -40,7 +39,7 @@ def predict(input: PredictRequest):
 
 
 @app.post("/predict_csv")
-def predict_csv(csv_file: UploadFile = File(...)):
+def predict_csv(csv_file: UploadFile = File(...), model: Model = Depends(get_model)):
     df = pd.read_csv(csv_file.file)
 
     df_n_instances, df_n_features = df.shape

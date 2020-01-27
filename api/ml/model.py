@@ -6,14 +6,14 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.datasets import load_boston
 
 
-model_path = Path(__file__).parent / "model.joblib"
-n_features = load_boston(return_X_y=True)[0].shape[1]
-
-
 class Model:
     def __init__(self, model_path: str = None):
-        self._model = None
         self._model_path = model_path
+
+        try:
+            self._model = joblib.load(self._model_path)
+        except:
+            self._model = None
 
     def train(self, X: np.ndarray, y: np.ndarray):
         self._model = RandomForestRegressor()
@@ -34,7 +34,13 @@ class Model:
         return self
 
 
+model_path = Path(__file__).parent / "model.joblib"
+n_features = load_boston(return_X_y=True)[0].shape[1]
 model = Model(model_path)
+
+
+def get_model():
+    return model
 
 
 if __name__ == "__main__":
