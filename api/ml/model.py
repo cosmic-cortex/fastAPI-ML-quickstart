@@ -8,12 +8,9 @@ from sklearn.datasets import load_boston
 
 class Model:
     def __init__(self, model_path: str = None):
+        self._model = None
         self._model_path = model_path
-
-        try:
-            self._model = joblib.load(self._model_path)
-        except:
-            self._model = None
+        self.load()
 
     def train(self, X: np.ndarray, y: np.ndarray):
         self._model = RandomForestRegressor()
@@ -30,7 +27,10 @@ class Model:
             raise TypeError("The model is not trained yet, use .train() before saving")
 
     def load(self):
-        self._model = joblib.load(self._model_path)
+        try:
+            self._model = joblib.load(self._model_path)
+        except:
+            self._model = None
         return self
 
 
