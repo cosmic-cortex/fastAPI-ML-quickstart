@@ -7,7 +7,7 @@ from fastapi import FastAPI, File, UploadFile, HTTPException
 from pydantic import BaseModel, ValidationError, validator
 from starlette.status import HTTP_422_UNPROCESSABLE_ENTITY
 
-from .ml.model import load_model, n_features
+from .ml.model import model, n_features
 
 
 class PredictRequest(BaseModel):
@@ -27,7 +27,7 @@ class PredictResponse(BaseModel):
 
 
 app = FastAPI()
-model = load_model()
+model.load()
 
 
 @app.post("/predict", response_model=PredictResponse)
