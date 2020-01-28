@@ -40,7 +40,12 @@ def predict(input: PredictRequest, model: Model = Depends(get_model)):
 
 @app.post("/predict_csv")
 def predict_csv(csv_file: UploadFile = File(...), model: Model = Depends(get_model)):
-    df = pd.read_csv(csv_file.file)
+    try:
+        df = pd.read_csv(csv_file.file)
+    except:
+        raise HTTPException(
+            status_code=HTTP_422_UNPROCESSABLE_ENTITY, detail="Unable to process file"
+        )
 
     df_n_instances, df_n_features = df.shape
     if df_n_features != n_features:

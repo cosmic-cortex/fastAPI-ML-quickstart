@@ -42,3 +42,9 @@ def test_predict_csv_with_wrong_input(test_client: TestClient):
     with open(data_path, "r") as csv_file:
         response = test_client.post("/predict_csv", files={"csv_file": csv_file})
         assert response.status_code == HTTP_422_UNPROCESSABLE_ENTITY
+
+
+def test_predict_csv_with_noncsv_file(test_client: TestClient):
+    with open(__file__, "r") as file:
+        response = test_client.post("/predict_csv", files={"csv_file": file})
+        assert response.status_code == HTTP_422_UNPROCESSABLE_ENTITY
