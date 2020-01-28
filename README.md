@@ -34,7 +34,12 @@ curl
 docker build --file Dockerfile --tag fastapi-ml-quickstart .
 ```
 
-2. Entering into the Docker image
+2. Running the Docker image
+```
+docker run -p 8000:8000 fastapi-ml-quickstart
+```
+
+3. Entering into the Docker image
 ```
 docker run -it --entrypoint /bin/bash fastapi-ml-quickstart
 ```
